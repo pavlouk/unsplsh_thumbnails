@@ -1,4 +1,3 @@
-from telnetlib import SE
 from typing import Optional
 
 from fastapi import FastAPI
