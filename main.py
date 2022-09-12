@@ -17,4 +17,10 @@ def hello():
 
 @app.get("/search/{query}")
 def search(query: str, orientation: Optional[str] = None, color: Optional[str] = None):
-    return {"some": "thing"}
+    search_url = SEARCH_URL + f"?query={query}"
+    if orientation is not None:
+        search_url += f"&orientation={orientation}"
+    if color is not None:
+        search_url += f"&color={color}"
+    search_url += ACCESS_KEY
+    return {"Search using": search_url}
