@@ -1,3 +1,6 @@
+from telnetlib import SE
+from typing import Optional
+
 from fastapi import FastAPI
 from starlette.config import Config
 
@@ -10,3 +13,8 @@ app = FastAPI()
 @app.get("/")
 def hello():
     return {"hello": "world"}
+
+
+@app.get("/search/{query}")
+def search(query: str, orientation: Optional[str] = None, color: Optional[str] = None):
+    return {"some": "thing"}
