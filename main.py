@@ -1,7 +1,9 @@
+from io import BytesIO
 from typing import Optional
 
 import httpx
 from fastapi import FastAPI
+from PIL import Image
 from starlette.config import Config
 
 config = Config(".env")
@@ -26,10 +28,17 @@ async def search(
         search_url += f"&color={color}"
     search_url += f"&client_id={ACCESS_KEY}"
     async with httpx.AsyncClient() as client:
-        resp = httpx.get(search_url)
-        resp.raise_for_status()
-        data = resp.json()
-    results = data.get("results", {})
-    links = results[0].get("links", {})
-    download_url = links.get("download", "Error")
-    return {"download_url": download_url}
+        response = httpx.get(search_url)
+        response.raise_for_status()
+        response_body = response.json()
+        search_results = response_body.get("results", {})
+        urls = search_results[0].get("urls", {})
+        image_width = search_results[0].get("width", {})
+        image_height = search_results[0].get("height", {})
+        raw_url = urls.get("small", "Error")
+        image_response = httpx.get(raw_url)
+        image_buffer = BytesIO(image_response.content)
+    return {
+        "raw width": image_width,
+        "raw height": image_height,
+    }
