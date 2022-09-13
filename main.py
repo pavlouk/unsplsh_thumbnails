@@ -29,4 +29,7 @@ async def search(
         resp = httpx.get(search_url)
         resp.raise_for_status()
         data = resp.json()
-    return {search_url: data}
+    results = data.get("results", {})
+    links = results[0].get("links", {})
+    download_url = links.get("download", "Error")
+    return {"download_url": download_url}
