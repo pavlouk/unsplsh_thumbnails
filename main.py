@@ -1,15 +1,37 @@
+from enum import Enum
 from io import BytesIO
 from typing import Optional
 
 import httpx
 from fastapi import FastAPI
 from PIL import Image
+from pydantic import BaseModel
 from starlette.config import Config
 
 config = Config(".env")
 ACCESS_KEY = config("ACCESS_KEY")
 SEARCH_URL = "https://api.unsplash.com/search/photos"
 app = FastAPI()
+
+
+class OrientationEnum(str, Enum):
+    portrait = "portrait"
+    landscape = "landscape"
+    squarish = "squarish"
+
+
+class ColorEnum(str, Enum):
+    black_and_white = "black_and_white"
+    black = "black"
+    white = "white"
+    yellow = "yellow"
+    orange = "orange"
+    red = "red"
+    purple = "purple"
+    magenta = "magenta"
+    green = "green"
+    teal = "teal"
+    blue = "blue"
 
 
 @app.get("/")
@@ -19,13 +41,15 @@ def hello():
 
 @app.get("/search/{query}")
 async def search(
-    query: str, orientation: Optional[str] = None, color: Optional[str] = None
+    query: str,
+    orientation: Optional[OrientationEnum] = None,
+    color: Optional[ColorEnum] = None,
 ):
     search_url = SEARCH_URL + f"?query={query}"
     if orientation is not None:
-        search_url += f"&orientation={orientation}"
+        search_url += f"&orientation={orientation.value}"
     if color is not None:
-        search_url += f"&color={color}"
+        search_url += f"&color={color.value}"
     search_url += f"&client_id={ACCESS_KEY}"
     async with httpx.AsyncClient() as client:
         response = httpx.get(search_url)
