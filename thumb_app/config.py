@@ -8,6 +8,7 @@ load_dotenv()
 
 class Settings(BaseSettings):
     unsplash_key: str
+    usplash_api: str = "https://api.unsplash.com/search/photos"
     env_name: str = "Local"
     base_url: str = "http://localhost:8000"
     db_url: str = "sqlite:///./thumbnails.db"
