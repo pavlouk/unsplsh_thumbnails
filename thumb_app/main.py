@@ -34,9 +34,21 @@ class ColorEnum(str, Enum):
     blue = "blue"
 
 
+class SearchModel(BaseModel):
+    orientation: OrientationEnum
+    color: ColorEnum
+
+
 @app.get("/")
 def hello():
     return {"hello": "world"}
+
+
+def create_thumbnail(buffered_image: BytesIO):
+    image = Image.open(buffered_image)
+    return image.thumbnail(
+        size=(200, image.height * 200 // image.width), resample=Image.Resampling.LANCZOS
+    )
 
 
 @app.get("/search/{query}")
