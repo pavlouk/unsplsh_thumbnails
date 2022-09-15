@@ -9,7 +9,4 @@ class Thumbnail(Base):
 
     id = Column(Integer, primary_key=True)
     key = Column(String, unique=True, index=True)
-    secret_key = Column(String, unique=True, index=True)
     thumbnail_image = Column(String, index=True)
-    is_active = Column(Boolean, default=True)
-    clicks = Column(Integer, default=0)
