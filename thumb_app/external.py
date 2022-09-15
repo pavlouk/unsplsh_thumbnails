@@ -22,7 +22,10 @@ def create_thumbnail(buffered_image: BytesIO):
     image.thumbnail(
         size=(200, image.height * 200 // image.width), resample=Image.Resampling.LANCZOS
     )
-    return image
+    buffered_output = BytesIO()
+    image.save(buffered_output, format=image.format)
+    thumbnail_string = buffered_output.getvalue()
+    return thumbnail_string
 
 
 async def fetch_image(search_url: str):
@@ -36,4 +39,5 @@ async def fetch_image(search_url: str):
         image_response = await client.get(raw_url)
         response.raise_for_status()
         image_buffer = BytesIO(image_response.content)
-        return create_thumbnail(image_buffer)
+        thumbnail_string = create_thumbnail(image_buffer)
+        return thumbnail_string
