@@ -1,5 +1,4 @@
 import secrets
-from io import BytesIO
 
 import validators
 from fastapi import Depends, FastAPI, HTTPException, Request
