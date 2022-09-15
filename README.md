@@ -28,7 +28,7 @@ pip3 install -r requirements.txt
 Run uvicorn server and connect to development enviroment `http://127.0.0.1:8000/`
 
 ```
-uvicorn thumbs_app.main:app --reload
+uvicorn thumb_app.main:app --reload
 ```
 
 ## Overview
@@ -43,5 +43,14 @@ Here’s a summary of the thumbnail API endpoints:
 For easy API access open a browser on `http://127.0.0.1:8000/docs` and use the endpoints.
 
 ## Examples 
+#### Docs Page 
 
+![image-20220915170537097](.\screenshots\image-20220915170537097.png)
 
+#### Search Request 
+![image-20220915170755970](.\screenshots\image-20220915170755970.png)
+#### View Thumbnail
+
+![image-20220915170856440](.\screenshots\image-20220915170856440.png)
+
+![image-20220915171150838](.\screenshots\image-20220915171150838.png)
