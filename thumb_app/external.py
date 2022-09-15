@@ -19,9 +19,10 @@ def unsplash_builder(search: schemas.SearchBase) -> str:
 
 def create_thumbnail(buffered_image: BytesIO):
     image = Image.open(buffered_image)
-    return image.thumbnail(
+    image.thumbnail(
         size=(200, image.height * 200 // image.width), resample=Image.Resampling.LANCZOS
     )
+    return image
 
 
 async def fetch_image(search_url: str):
