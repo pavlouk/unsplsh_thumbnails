@@ -3,4 +3,5 @@ uvicorn
 httpx
 sqlalchemy
 python-dotenv
+validators
 Pillow
