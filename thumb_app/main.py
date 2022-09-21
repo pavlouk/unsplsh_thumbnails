@@ -53,7 +53,7 @@ def raise_not_found(request):
 
 @app.get("/{thumbnail_key}")
 def show_thumbnail(thumbnail_key: str, request: Request, db: Session = Depends(get_db)):
-    db_thumbnails = db.query(models.Thumbnail).filter(models.Thumbnail.key == thumbnail_key, models.Thumbnail.is_active).first()  # type: ignore
+    db_thumbnails = db.query(models.Thumbnail).filter(models.Thumbnail.key == thumbnail_key).first()  # type: ignore
     if db_thumbnails:
         return Response(db_thumbnails.thumbnail_image, media_type="image/jpeg")  # type: ignore
     else:
